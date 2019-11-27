@@ -33,14 +33,14 @@ public:
 	float temp_on2 = 53.0; //level 2 of the fan activation
 	float temp_on3 = 90.0; // level 3 of the fan activation
 	float temp_alarm = 105; // start alarm
-	float hyster = 3; // hysteresis
+	float hyster = 4; // hysteresis
 	float temp_off1 = temp_on1 - hyster; //level 1 switch off the fan
 	float temp_off2 = temp_on2 - hyster; //level 2 switch off the fan
 	float temp_off3 = temp_on3 - hyster; //level 3 switch off the fan
 	float temp_max = 20.0; //remember the last maximum temperature
 	int PWMfreq = 5000; //frequency PWM
-	long int Fan1Speed[4]={0,30,70,100}; //percent %
-	long int Fan2Speed[4]={0,30,70,100};
+	long int Fan1Speed[4]={0,40,70,100}; //percent %
+	long int Fan2Speed[4]={0,40,70,100};
 	int fan1 = Fan1Speed[0];
 	int fan2 = Fan2Speed[0];
 	int fanx = 0;
