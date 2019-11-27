@@ -45,10 +45,11 @@
 
 #include "RF2260.h"
 #include "WebPages.h"
+#include "secrets.h"
 
 
 //#define DATA_COMPIL __TIMESTAMP__
-String version = "1.1";
+String version = "1.2.1";
 FireplaceController fc;
 int ManualTime = 15; // how many minutes the manual state lasts
 double long timeM = 0; //time to start MANUAL mode
@@ -60,10 +61,6 @@ extern ESP8266WebServer server;
 // set the details of your WiFi network
 //const char* ssid = "SSID"; //SSID your WiFi
 //const char* pass = "password"; // password your WiFi
-
-const char* ssid = "POLJANT_WLAN"; //SSID your WiFi
-const char* pass = "Marcjzt29newpass"; // password your WiFi
-
 
 //#define DEBUG
 #define IP_STATIC
@@ -111,9 +108,9 @@ lcd.begin(16, 2);
 lcd.home() ; lcd.clear();
 lcd.setBacklight(255);
 lcd.setCursor(0, 0);
-lcd.print("  Fireplace!  ");
+lcd.print(F("  Fireplace!  "));
 lcd.setCursor(0, 1);
-lcd.print("Uruchamianie...");
+lcd.print(F("Uruchamianie..."));
 
 WiFi.begin(ssid, pass);
 int i=0;
@@ -136,10 +133,10 @@ int i=0;
 #ifdef DEBUG
   if (WiFi.status() == WL_CONNECTED){
   Serial.println("");
-  Serial.println("WiFi connected");
+  Serial.println(F("WiFi connected"));
   Serial.println(WiFi.localIP());         // print IP
   Serial.println(WiFi.macAddress());      // print MAC address
-  }else Serial.println("Disconnect!!!");
+  }else Serial.println(F("Disconnect!!!"));
  // printconfig();
 #endif
 
@@ -176,7 +173,7 @@ void loop()
 	 if (fc.temp_in_box>=fc.temp_alarm){
 		// lcd.setBacklight(120);
 		 lcd.setCursor(0, 1);
-		 lcd.print("**** ALARM! ****");
+		 lcd.print(F("**** ALARM! ****"));
 //		 if (disp) {
 			 lcd.noDisplay();
 			 delay(300);

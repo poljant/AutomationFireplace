@@ -65,16 +65,15 @@ char* IPAdrToStr(int ip)
 
 
 String HTMLHeader() {           //  Header page
-String  h = "<!DOCTYPE html>\n";
-  h += "<html>";
-  h += "<head>";
-  h += "<title> FireplaceController</title>";
-//  h += "<meta http-equiv=\"Refresh\" content=\"300\" />";  //odświerzaj stronę co 300 sek.
-  h += "<meta charset=\"utf-8\">";
-  h += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";
-  h += "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css\" >";
-  h += "</head>";
-  h += "<body style=\"text-align: center;color: white; background: black;font-size: 1.5em;\">\n";
+String  h = F("<!DOCTYPE html>\n"
+  "<html>"
+  "<head>"
+  "<title> FireplaceController</title>"
+  "<meta charset=\"utf-8\">"
+  "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
+  "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css\" >"
+  "</head>"
+  "<body style=\"text-align: center;color: white; background: black;font-size: 1.5em;\">\n");
 
   return h;
 }
@@ -82,13 +81,13 @@ String  h = "<!DOCTYPE html>\n";
 String HTMLFooter() {             //  stopka strony www
 String  f ="";
 #ifdef POLISH
-  f += "<p><a href = \"/\"><button class=\"btn btn-info\">Odświerz stronę</button></a></p>";
+  f += F("<p><a href = \"/\"><button class=\"btn btn-info\">Odświerz stronę</button></a></p>");
 #else
-  f += "<p><a href = \"/\"><button class=\"btn btn-info\">Reload</button></a></p>";
+  f += F("<p><a href = \"/\"><button class=\"btn btn-info\">Reload</button></a></p>");
 #endif
-  f += "<p>Jan Trzciński &copy; 2016-2018</p></td></tr>";
-  f += "</body>\n";
-  f += "</html>\n";
+  f += F("<p>Jan Trzciński &copy; 2016-2018</p></td></tr>"
+   "</body>\n"
+   "</html>\n");
   return f;
 }
 
@@ -102,11 +101,11 @@ String HTMLPage1() {      // pierwsza część strony www
   min = min % 60;
   hour = hour % 24;
 #ifdef POLISH
- t  = "<h1><p>Automatyka kominka</p></h1>";
- t += "<p> Wersja ";
+ t  = F("<h1><p>Automatyka kominka</p></h1>"
+  "<p> Wersja ");
 #else
- t  = "<h1><p>Automation Fireplace</p></h1>";
- t += "<p> version ";
+ t  = F("<h1><p>Automation Fireplace</p></h1>"
+  "<p> version ");
 #endif
  t += (version);
  t += "</p>";
@@ -114,15 +113,15 @@ String HTMLPage1() {      // pierwsza część strony www
 // t += (powersuply/1000);
 // t += "V</p>";
 #ifdef POLISH
- t += "<p>Czas od uruchomienia dni: ";
+ t += F("<p>Czas od uruchomienia dni: ");
 #else
- t += "<p>UpTime days: ";
+ t += F("<p>UpTime days: ");
 #endif
  t += (days);
 #ifdef POLISH
- t += " godz:" ;
+ t += F(" godz:" );
 #else
- t += " hours:" ;
+ t += F(" hours:" );
 #endif
  t += ((hour<10) ? "0" : "");
  t += (hour);
@@ -141,24 +140,24 @@ String HTMLPage1a(){
 	  float temperature = fc.readTempIn();// (sensors.getTempCByIndex(0));
 	 // float powersuply = ESP.getVcc()*0.913; //popraw błąd przeliczania napięcia
 #ifdef POLISH
- t += "<p> Temperatura powietrza w komorze: ";
+ t += F("<p> Temperatura powietrza w komorze: ");
 #else
- t += "<p> Air temperature in the fireplace chamber: ";
+ t += F("<p> Air temperature in the fireplace chamber: ");
 #endif
  t += (temperature);
  t += " ºC</p>";
 #ifdef POLISH
- t += "<p> Temperatura maksymalna: ";
+ t += F("<p> Temperatura maksymalna: ");
 #else
- t += "<p> Last maximum temperature:: ";
+ t += F("<p> Last maximum temperature:: ");
 #endif
  t += (fc.temp_max);
- t += " ºC</p>";
- t += "<p> Fan1: ";
+ t += F(" ºC</p>"
+  "<p> Fan1: ");
  t += (fc.fan1);
- t += "% Fan2: ";
+ t += F("% Fan2: ");
  t += (fc.fan2);
- t += " %</p>";
+ t += F(" %</p>");
 
  return t;
 }
@@ -166,15 +165,15 @@ String HTMLPage1a(){
 String HTMLInfo(){
 	String p="";
 #ifdef POLISH
-	 p += ( "<p>Połączenia: 1-Wire na D3, Nad. lub odb. RF na D4 </p>\n");
-	 p += ( "<p>Odbiornik RF CLARUS gniazdo 2 z serii 0047</p>\n");
-	 p += ( "<p> relay1 na D8, relay2 na D0</p>");
-	 p += ("<p> PWM1 na D5, PWM2 na D6, relay3 na D7 </p>\n");
+	 p += F( "<p>Połączenia: 1-Wire na D3, Nad. lub odb. RF na D4 </p>\n"
+	  "<p>Odbiornik RF CLARUS gniazdo 2 z serii 0047</p>\n"
+	  "<p> relay1 na D8, relay2 na D0</p>"
+	  "<p> PWM1 na D5, PWM2 na D6, relay3 na D7 </p>\n");
 #else
-	 p += ( "<p>connections: 1-Wire to D3, TX RF or RX RF to D4 </p>\n");
-	 p += ( "<p>Receiver RF CLARUS socket 2 series 0047</p>\n");
-	 p += ( "<p> relay1 to D8, relay2 to D0</p>");
-	 p += ("<p> PWM1 to D5, PWM2 to D6, relay3 to D7 </p>\n");
+	 p += F( "<p>connections: 1-Wire to D3, TX RF or RX RF to D4 </p>\n"
+	  "<p>Receiver RF CLARUS socket 2 series 0047</p>\n"
+	  "<p> relay1 to D8, relay2 to D0</p>"
+	  "<p> PWM1 to D5, PWM2 to D6, relay3 to D7 </p>\n");
 #endif
 	  return p;
 }
@@ -183,55 +182,55 @@ String HTMLPage2() {            // główna strona www
   //  display links depending on current state of relay 1,2,3 i 4
   if (!fc.bmode) { //gdy ustawiony tryb ręczny
 #ifdef POLISH
-  p += ( (fc.relay3.read()) ? "<p><a href = \"/relay1/0\"><button class=\"btn btn-danger\">Przekaźnik 1 ON</button></a></p>\n" \
-  : "<p><a href = \"/relay1/1\"><button class=\"btn btn-success\">Przekaźnik 1 OFF</button></a></p>\n");
-  p += ( (fc.relay1.read()) ? "<p><a href = \"/relay2/0\"><button class=\"btn btn-danger\">Przekaźnik 2 ON</button></a></p>\n" \
-  : "<p><a href = \"/relay2/1\"><button class=\"btn btn-success\">Przekaźnik 2 OFF</button></a></p>\n");
-  p += ( (fc.rf3.readRF()) ? "<p><a href = \"/relay3/0\"><button class=\"btn btn-danger\">Przekaźnik 3 ON</button></a></p>\n" \
-    : "<p><a href = \"/relay3/1\"><button class=\"btn btn-success\">Przekaźnik 3 OFF</button></a></p>\n");
-  p += ( (fc.relay2.read()) ? "<p><a href = \"/alarm/0\"><button class=\"btn btn-danger\">ALARM ON</button></a></p>\n" \
-      : "<p><a href = \"/alarm/1\"><button class=\"btn btn-success\">ALARM OFF</button></a></p>\n");
+  p += (fc.relay3.read()) ? F("<p><a href = \"/relay1/0\"><button class=\"btn btn-danger\">Przekaźnik 1 ON</button></a></p>\n") \
+  : F("<p><a href = \"/relay1/1\"><button class=\"btn btn-success\">Przekaźnik 1 OFF</button></a></p>\n");
+  p += (fc.relay1.read()) ? F("<p><a href = \"/relay2/0\"><button class=\"btn btn-danger\">Przekaźnik 2 ON</button></a></p>\n") \
+  : F("<p><a href = \"/relay2/1\"><button class=\"btn btn-success\">Przekaźnik 2 OFF</button></a></p>\n");
+  p += (fc.rf3.readRF()) ? F("<p><a href = \"/relay3/0\"><button class=\"btn btn-danger\">Przekaźnik 3 ON</button></a></p>\n") \
+    : F("<p><a href = \"/relay3/1\"><button class=\"btn btn-success\">Przekaźnik 3 OFF</button></a></p>\n");
+  p +=  (fc.relay2.read()) ? F("<p><a href = \"/alarm/0\"><button class=\"btn btn-danger\">ALARM ON</button></a></p>\n") \
+      : F("<p><a href = \"/alarm/1\"><button class=\"btn btn-success\">ALARM OFF</button></a></p>\n");
 #else
-  p += ( (fc.relay3.read()) ? "<p><a href = \"/relay1/0\"><button class=\"btn btn-danger\">Relay 1 ON</button></a></p>\n" \
-  : "<p><a href = \"/relay1/1\"><button class=\"btn btn-success\">Relay 1 OFF</button></a></p>\n");
-  p += ( (fc.relay1.read()) ? "<p><a href = \"/relay2/0\"><button class=\"btn btn-danger\">Relay 2 ON</button></a></p>\n" \
-  : "<p><a href = \"/relay2/1\"><button class=\"btn btn-success\">Relay 2 OFF</button></a></p>\n");
-  p += ( (fc.rf3.readRF()) ? "<p><a href = \"/relay3/0\"><button class=\"btn btn-danger\">Relay 3 ON</button></a></p>\n" \
-    : "<p><a href = \"/relay3/1\"><button class=\"btn btn-success\">Relay 3 OFF</button></a></p>\n");
-  p += ( (fc.relay2.read()) ? "<p><a href = \"/alarm/0\"><button class=\"btn btn-danger\">ALARM ON</button></a></p>\n" \
-  : "<p><a href = \"/alarm/1\"><button class=\"btn btn-success\">ALARM OFF</button></a></p>\n");
+  p += (fc.relay3.read()) ? F("<p><a href = \"/relay1/0\"><button class=\"btn btn-danger\">Relay 1 ON</button></a></p>\n") \
+  : F("<p><a href = \"/relay1/1\"><button class=\"btn btn-success\">Relay 1 OFF</button></a></p>\n");
+  p += (fc.relay1.read()) ? F("<p><a href = \"/relay2/0\"><button class=\"btn btn-danger\">Relay 2 ON</button></a></p>\n") \
+  : F("<p><a href = \"/relay2/1\"><button class=\"btn btn-success\">Relay 2 OFF</button></a></p>\n");
+  p += (fc.rf3.readRF()) ? F("<p><a href = \"/relay3/0\"><button class=\"btn btn-danger\">Relay 3 ON</button></a></p>\n") \
+    : F("<p><a href = \"/relay3/1\"><button class=\"btn btn-success\">Relay 3 OFF</button></a></p>\n");
+  p +=  (fc.relay2.read()) ? F("<p><a href = \"/alarm/0\"><button class=\"btn btn-danger\">ALARM ON</button></a></p>\n") \
+  : F("<p><a href = \"/alarm/1\"><button class=\"btn btn-success\">ALARM OFF</button></a></p>\n");
 #endif
   }
   else { // if type AUTO
 #ifdef POLISH
 	  // gdy tryb AUTO
-  p += ( (fc.relay3.read()) ? "<p><button class=\"btn btn-danger\">Przekaźnik 1 ON</button></p>\n" \
-  : "<p><button class=\"btn btn-success\">Przekaźnik 1 OFF</button></p>\n");
-  p += ( (fc.relay1.read()) ? "<p><button class=\"btn btn-danger\">Przekaźnik 2 ON</button></p>\n" \
-  : "<p><button class=\"btn btn-success\">Przekaźnik 2 OFF</button></p>\n");
-  p += ( (fc.rf3.readRF()) ? "<p><button class=\"btn btn-danger\">Przekaźnik 3 ON</button></p>\n" \
-    : "<p><button class=\"btn btn-success\">Przekaźnik 3 OFF</button></p>\n");
-  p += ( (fc.relay2.read()) ? "<p><button class=\"btn btn-danger\">ALARM ON</button></p>\n" \
-   : "<p><button class=\"btn btn-success\">ALARM OFF</button></p>\n");
+  p += (fc.relay3.read()) ? F("<p><button class=\"btn btn-danger\">Przekaźnik 1 ON</button></p>\n") \
+  : F("<p><button class=\"btn btn-success\">Przekaźnik 1 OFF</button></p>\n");
+  p += (fc.relay1.read()) ? F(<p><button class=\"btn btn-danger\">Przekaźnik 2 ON</button></p>\n") \
+  : F("<p><button class=\"btn btn-success\">Przekaźnik 2 OFF</button></p>\n");
+  p += (fc.rf3.readRF()) ? F("<p><button class=\"btn btn-danger\">Przekaźnik 3 ON</button></p>\n") \
+    : F("<p><button class=\"btn btn-success\">Przekaźnik 3 OFF</button></p>\n");
+  p += (fc.relay2.read()) ? F("<p><button class=\"btn btn-danger\">ALARM ON</button></p>\n") \
+   : F("<p><button class=\"btn btn-success\">ALARM OFF</button></p>\n");
 #else
-  p += ( (fc.relay3.read()) ? "<p><button class=\"btn btn-danger\">Relay 1 ON</button></p>\n" \
-  : "<p><button class=\"btn btn-success\">Relay 1 OFF</button></p>\n");
-  p += ( (fc.relay1.read()) ? "<p><button class=\"btn btn-danger\">Relay 2 ON</button></p>\n" \
-  : "<p><button class=\"btn btn-success\">Relay 2 OFF</button></p>\n");
-  p += ( (fc.rf3.readRF()) ? "<p><button class=\"btn btn-danger\">Relay 3 ON</button></p>\n" \
-    : "<p><button class=\"btn btn-success\">Relay 3 OFF</button></p>\n");
-  p += ( (fc.relay2.read()) ? "<p><button class=\"btn btn-danger\">ALARM ON</button></p>\n" \
-  : "<p><button class=\"btn btn-success\">ALARM OFF</button></p>\n");
+  p += (fc.relay3.read()) ? F("<p><button class=\"btn btn-danger\">Relay 1 ON</button></p>\n") \
+  : F("<p><button class=\"btn btn-success\">Relay 1 OFF</button></p>\n");
+  p += (fc.relay1.read()) ? F("<p><button class=\"btn btn-danger\">Relay 2 ON</button></p>\n") \
+  : F("<p><button class=\"btn btn-success\">Relay 2 OFF</button></p>\n");
+  p += (fc.rf3.readRF()) ? F("<p><button class=\"btn btn-danger\">Relay 3 ON</button></p>\n") \
+    : F("<p><button class=\"btn btn-success\">Relay 3 OFF</button></p>\n");
+  p += (fc.relay2.read()) ? F("<p><button class=\"btn btn-danger\">ALARM ON</button></p>\n") \
+  : F("<p><button class=\"btn btn-success\">ALARM OFF</button></p>\n");
 #endif
   }
 #ifdef POLISH
   // wyświetl jaki tryb wybrany
-  p += ( (fc.bmode) ? "<p><a href = \"/login\"><button class=\"btn btn-success\">Tryb AUTO</button></a></p>\n" \
-  : "<p><a href = \"/auto\"> <button class=\"btn btn-danger\"> Tryb MANUAL</button></a></p>\n");
+  p += (fc.bmode) ? F("<p><a href = \"/login\"><button class=\"btn btn-success\">Tryb AUTO</button></a></p>\n") \
+  : F("<p><a href = \"/auto\"> <button class=\"btn btn-danger\"> Tryb MANUAL</button></a></p>\n");
 #else
   // display type mode
-  p += ( (fc.bmode) ? "<p><a href = \"/login\"><button class=\"btn btn-success\">Type AUTO</button></a></p>\n" \
-  : "<p><a href = \"/auto\"> <button class=\"btn btn-danger\"> Type MANUAL</button></a></p>\n");
+  p += (fc.bmode) ? F("<p><a href = \"/login\"><button class=\"btn btn-success\">Type AUTO</button></a></p>\n") \
+  : F("<p><a href = \"/auto\"> <button class=\"btn btn-danger\"> Type MANUAL</button></a></p>\n");
 #endif
   return p;
 }
@@ -345,11 +344,12 @@ void setservers(void){
 	  fc.pwm.write(0, fc.percent2duration(fc.fan1));
 	  fc.fan2 = fc.Fan2Speed[3];
 	  fc.pwm.write(1, fc.percent2duration(fc.fan2));
-	  timeM = fminutes(ManualTime); // odnów czas trybu MANUAL
+	  timeM = fminutes(ManualTime); // reset time trybu MANUAL
   }
     server.send(200, "text/html", WebPage());
   });
- server.on("/alarm/0", [] ()     // off relay 3
+
+ server.on("/alarm/0", [] ()     // set alarm off
   {
 		 //if (!fc.bmode) {
 	  fc.relay2.setOff();
@@ -358,7 +358,7 @@ void setservers(void){
     server.send(200, "text/html", WebPage());
   });
 
- server.on("/alarm/1", []()      // załącz przekaźnik 3
+ server.on("/alarm/1", []()      // set alarm on
   {
 		 //if (!fc.bmode) {
 	  fc.relay2.setOn();
@@ -375,57 +375,38 @@ void setservers(void){
     server.send(200, "text/html", WebPage());
   });
 
- server.on("/program/0", []()      // rest system
+ server.on("/program/0", []()      // set progran 0
    { if (!fc.bmode) {
  	 fc.program=0;
    }
    server.send(200, "text/html", "program = 0");
   });
 
- server.on("/program/1", []()      // rest system
+ server.on("/program/1", []()      // set program 1
     { if (!fc.bmode) {
   	 fc.program=1;
     }
  server.send(200, "text/html", "program = 1");
    });
 
- server.on("/alarm", []()      // rest system
+ server.on("/alarm", []()      // alarm off / on
     {
 	 fc.alarm=!fc.alarm;
   server.send(200, "text/html", ((fc.alarm)?"Alarm On":"Alarm Off"));
   });
 
- // server.on("/setfile", []()      // czytaj configurację z pliku setconfig
-//  { if (!fc.bmode) {
-//	  setfromfile(setfile);
-//	  timeM = fminutes(ManualTime); // odnów czas trybu MANUAL
-//  }
-//    server.send(200, "text/html", WebPage());
-//  });
+server.on("/reboot", []()      // reset system
+  {
+	if (fc.bmode) return 0;
 
+	  ESP.restart();
+  server.send(200, "text/html", F("Reboot system!"));
 
-// server.on("/default", []()      // przywróć ustawienia domyślne
-//  { if (!fc.bmode) {
-//	  timeM = fminutes(ManualTime); // odnów czas trybu MANUAL
-//	  set2default();
-//	  settofile(setfile);
-//  }
-//  server.send(200, "text/html", "Powrót do ustawień domyslnych. Restart systemu!");
- // ESP.restart();
- // });
+  });
 
-server.on("/reboot", []()      // rest system
-  { if (fc.bmode) {
-	 return 0;
-	//  timeM = fminutes(ManualTime); // odnów czas trybu MANUAL
-  }
-  server.send(200, "text/html", "Reboot system!");
-  ESP.restart();
- });
-
- server.begin();                // Start serwera www
+ server.begin();                // Start server www
 #ifdef DEBUG
-  Serial.println("Server started");
+  Serial.println(F("Server started"));
 #endif
  }
 

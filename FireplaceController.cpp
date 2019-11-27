@@ -6,22 +6,21 @@
  *      Author: Jan Trzciński  <poljant@post.pl>
  */
 
-#include "FireplaceController.h"
 
 #include <Arduino.h>
 #include <DallasTemperature.h>
 #include <OneWire.h>
 #include <Relay.h>
+#include "FireplaceController.h"
 #include "PWM.h"
-
 #include "RF2260.h"
 
-char* codOn1 =  "000101010001010111000011"; //attachment code
-char* codOff1 = "000101010001010111001100"; //disabling code
-char* codOn2 =  "000101010001010100110011"; //attachment code
-char* codOff2 = "000101010001010100111100"; //disabling code
-char* codOn3 =  "010000010001010111000011"; //attachment code
-char* codOff3 = "010000010001010111001100"; //disabling code
+char* codOn1 =  ("000101010001010111000011"); //attachment code
+char* codOff1 = ("000101010001010111001100"); //disabling code
+char* codOn2 =  ("000101010001010100110011"); //attachment code
+char* codOff2 = ("000101010001010100111100"); //disabling code
+char* codOn3 =  ("010000010001010111000011"); //attachment code
+char* codOff3 = ("010000010001010111001100"); //disabling code
 
 // pins definition
 #define pin_relay1 D8
@@ -176,7 +175,7 @@ int FireplaceController::duration2percent(long int v){
 int FireplaceController::temp2duration(long int v){
 	if(v<temp_on1) return 0;
 	if(v>100) v=100;
-	return (int)map(v,temp_on1,100,300,1023);
+	return (int)map(v,temp_on1,100,450,1023);
 }
 void FireplaceController::setFans( int i){
 	if (program==1){
