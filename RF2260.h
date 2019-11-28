@@ -29,14 +29,14 @@ public:
 	RF2260();
 	virtual ~RF2260();
 
-	void sendRF(char* scod); // wyslij cały kod on lub off
+	void sendRF(const char*); // wyslij cały kod on lub off
 	void sendOn(void); // wyslij kod załaczenia
 	void sendOff(void); // wyslij kod wyłaczenia
 	unsigned int readRF(void); // czytaj stan wyłącznika RF
-	void writeRF(unsigned int rfx); // zapisz stan RF
-	void setCodOn(char*); //ustaw kod załączenia
-	void setCodOff(char*); // ustaw kod wyłączenia
-	void setRF(unsigned int, unsigned int, char*, char*); //ustaw parametry wyłącznika RF
+	void writeRF(unsigned int); // zapisz stan RF
+	void setCodOn(const char*); //ustaw kod załączenia
+	void setCodOff(const char*); // ustaw kod wyłączenia
+	void setRF(unsigned int, unsigned int, const char*, const char*); //ustaw parametry wyłącznika RF
 
 };
 

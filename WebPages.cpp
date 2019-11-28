@@ -397,11 +397,10 @@ void setservers(void){
 
 server.on("/reboot", []()      // reset system
   {
-	if (fc.bmode) return 0;
-
-	  ESP.restart();
-  server.send(200, "text/html", F("Reboot system!"));
-
+	if (fc.bmode) return ;
+	ESP.restart();
+	delay(0);
+	server.send(200, "text/html", (F("Reboot system!")));
   });
 
  server.begin();                // Start server www

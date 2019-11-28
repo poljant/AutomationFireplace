@@ -15,12 +15,12 @@
 #include "PWM.h"
 #include "RF2260.h"
 
-char* codOn1 =  ("000101010001010111000011"); //attachment code
-char* codOff1 = ("000101010001010111001100"); //disabling code
-char* codOn2 =  ("000101010001010100110011"); //attachment code
-char* codOff2 = ("000101010001010100111100"); //disabling code
-char* codOn3 =  ("010000010001010111000011"); //attachment code
-char* codOff3 = ("010000010001010111001100"); //disabling code
+const char* codOn1 =  ("000101010001010111000011"); //attachment code
+const char* codOff1 = ("000101010001010111001100"); //disabling code
+const char* codOn2 =  ("000101010001010100110011"); //attachment code
+const char* codOff2 = ("000101010001010100111100"); //disabling code
+const char* codOn3 =  ("010000010001010111000011"); //attachment code
+const char* codOff3 = ("010000010001010111001100"); //disabling code
 
 // pins definition
 #define pin_relay1 D8

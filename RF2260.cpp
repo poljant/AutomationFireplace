@@ -32,11 +32,11 @@ unsigned int replay = 10; // how many times to repeat the code
 	// TODO Auto-generated destructor stub
 
  }
- void RF2260::setCodOn(char* cod){
-	codOn = cod;
+ void RF2260::setCodOn(const char* cod){
+	codOn =(char*)cod;
  }
- void RF2260::setCodOff(char* cod){
-	codOff = cod;
+ void RF2260::setCodOff(const char* cod){
+	codOff =(char*)cod;
  }
 // send 0 to the RFpin bus
 //   _
@@ -64,7 +64,7 @@ unsigned int replay = 10; // how many times to repeat the code
 	delay(5 * lH/1000);
 	delay(5 * lH/1000);
  }
- void RF2260::sendRF(char* cod){
+ void RF2260::sendRF(const char* cod){
 	for (unsigned int j = 0; j < replay; j++){
 		unsigned int i = 0;
 		while (cod[i] !='\0'){
@@ -88,7 +88,7 @@ unsigned int replay = 10; // how many times to repeat the code
  }
  void RF2260::sendOn(void){
 
-	 RF2260::sendRF(codOn);
+	 RF2260::sendRF( codOn);
 	 RF=1;
  }
 //read whether RF is On
@@ -99,7 +99,7 @@ unsigned int replay = 10; // how many times to repeat the code
  void RF2260::writeRF(unsigned int rfx){
 	 RF=rfx;
  }
- void RF2260::setRF(unsigned int pin, unsigned int l, char* On, char* Off){
+ void RF2260::setRF(unsigned int pin, unsigned int l, const char* On, const char* Off){
 	RFpin = pin; // set the RF connection pin
 	pinMode(RFpin, OUTPUT);
 	lH = l; // duration (us) of the high state on the RF pin
