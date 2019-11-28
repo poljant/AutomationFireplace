@@ -191,14 +191,14 @@ String HTMLPage2() {            // główna strona www
   p +=  (fc.relay2.read()) ? F("<p><a href = \"/alarm/0\"><button class=\"btn btn-danger\">ALARM ON</button></a></p>\n") \
       : F("<p><a href = \"/alarm/1\"><button class=\"btn btn-success\">ALARM OFF</button></a></p>\n");
 #else
-  p += (fc.relay3.read()) ? F("<p><a href = \"/relay1/0\"><button class=\"btn btn-danger\">Relay 1 ON</button></a></p>\n") \
-  : F("<p><a href = \"/relay1/1\"><button class=\"btn btn-success\">Relay 1 OFF</button></a></p>\n");
-  p += (fc.relay1.read()) ? F("<p><a href = \"/relay2/0\"><button class=\"btn btn-danger\">Relay 2 ON</button></a></p>\n") \
-  : F("<p><a href = \"/relay2/1\"><button class=\"btn btn-success\">Relay 2 OFF</button></a></p>\n");
-  p += (fc.rf3.readRF()) ? F("<p><a href = \"/relay3/0\"><button class=\"btn btn-danger\">Relay 3 ON</button></a></p>\n") \
-    : F("<p><a href = \"/relay3/1\"><button class=\"btn btn-success\">Relay 3 OFF</button></a></p>\n");
-  p +=  (fc.relay2.read()) ? F("<p><a href = \"/alarm/0\"><button class=\"btn btn-danger\">ALARM ON</button></a></p>\n") \
-  : F("<p><a href = \"/alarm/1\"><button class=\"btn btn-success\">ALARM OFF</button></a></p>\n");
+  p += (fc.relay3.read()) ? F("<p><a href = \"/relay1/0\"><button class=\"btn btn-danger\">Relay 1 is ON</button></a></p>\n") \
+  : F("<p><a href = \"/relay1/1\"><button class=\"btn btn-success\">Relay 1 is OFF</button></a></p>\n");
+  p += (fc.relay1.read()) ? F("<p><a href = \"/relay2/0\"><button class=\"btn btn-danger\">Relay 2 is ON</button></a></p>\n") \
+  : F("<p><a href = \"/relay2/1\"><button class=\"btn btn-success\">Relay 2 is OFF</button></a></p>\n");
+  p += (fc.rf3.readRF()) ? F("<p><a href = \"/relay3/0\"><button class=\"btn btn-danger\">Relay 3 is ON</button></a></p>\n") \
+    : F("<p><a href = \"/relay3/1\"><button class=\"btn btn-success\">Relay is 3 OFF</button></a></p>\n");
+  p +=  (fc.relay2.read()) ? F("<p><a href = \"/alarm/0\"><button class=\"btn btn-danger\">ALARM is ON</button></a></p>\n") \
+  : F("<p><a href = \"/alarm/1\"><button class=\"btn btn-success\">ALARM is OFF</button></a></p>\n");
 #endif
   }
   else { // if type AUTO
@@ -213,14 +213,14 @@ String HTMLPage2() {            // główna strona www
   p += (fc.relay2.read()) ? F("<p><button class=\"btn btn-danger\">ALARM ON</button></p>\n") \
    : F("<p><button class=\"btn btn-success\">ALARM OFF</button></p>\n");
 #else
-  p += (fc.relay3.read()) ? F("<p><button class=\"btn btn-danger\">Relay 1 ON</button></p>\n") \
-  : F("<p><button class=\"btn btn-success\">Relay 1 OFF</button></p>\n");
-  p += (fc.relay1.read()) ? F("<p><button class=\"btn btn-danger\">Relay 2 ON</button></p>\n") \
+  p += (fc.relay3.read()) ? F("<p><button class=\"btn btn-danger\">Relay 1 is ON</button></p>\n") \
+  : F("<p><button class=\"btn btn-success\">Relay 1 is OFF</button></p>\n");
+  p += (fc.relay1.read()) ? F("<p><button class=\"btn btn-danger\">Relay 2 is ON</button></p>\n") \
   : F("<p><button class=\"btn btn-success\">Relay 2 OFF</button></p>\n");
-  p += (fc.rf3.readRF()) ? F("<p><button class=\"btn btn-danger\">Relay 3 ON</button></p>\n") \
-    : F("<p><button class=\"btn btn-success\">Relay 3 OFF</button></p>\n");
-  p += (fc.relay2.read()) ? F("<p><button class=\"btn btn-danger\">ALARM ON</button></p>\n") \
-  : F("<p><button class=\"btn btn-success\">ALARM OFF</button></p>\n");
+  p += (fc.rf3.readRF()) ? F("<p><button class=\"btn btn-danger\">Relay 3 is ON</button></p>\n") \
+    : F("<p><button class=\"btn btn-success\">Relay 3 is OFF</button></p>\n");
+  p += (fc.relay2.read()) ? F("<p><button class=\"btn btn-danger\">ALARM is ON</button></p>\n") \
+  : F("<p><button class=\"btn btn-success\">ALARM is OFF</button></p>\n");
 #endif
   }
 #ifdef POLISH
