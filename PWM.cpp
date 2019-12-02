@@ -13,7 +13,7 @@
 
 PWM::PWM() {
 	channels = 3;
-	channel[channels][2];
+//	channel[channels][2];
 	freq = 1000;
 	//int value = 0;
 }
@@ -25,7 +25,7 @@ PWM::~PWM()
 void PWM::init(int pin1, int pin2, int pin3)
 {
 	channels = 3;
-	channel[channels][2];
+//	channel[channels][2];
 	channel[0][0] = pin1;
 	channel[1][0] = pin2;
 	channel[2][0] = pin3;
@@ -35,7 +35,7 @@ void PWM::init(int pin1, int pin2, int pin3)
 void PWM::init(int pin1, int pin2)
 {
 	channels = 2;
-	channel[channels][2];
+//	channel[channels][2];
 	channel[0][0] = pin1;
 	channel[1][0] = pin2;
 	set();
@@ -44,7 +44,7 @@ void PWM::init(int pin1, int pin2)
 void PWM::init(int pin1)
 {
 	channels = 1;
-	channel[channels][1];
+//	channel[channels][1];
 	channel[0][0] = pin1;
 	set();
 	//pin = p;
