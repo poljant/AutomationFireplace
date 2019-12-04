@@ -15,7 +15,6 @@ class PWM {
 public:
 	PWM();
 	virtual ~PWM();
-	//void setPin(int);
 	void init(int, int, int);
 	void init(int, int);
 	void init(int);
@@ -26,7 +25,5 @@ public:
 	void start(void);
 	int readFreq(void);
 };
-
-
 
 #endif /* PWM_H_ */

@@ -47,8 +47,6 @@
 #include "WebPages.h"
 #include "secrets.h"
 
-
-//#define DATA_COMPIL __TIMESTAMP__
 String version = "1.2.5";
 FireplaceController fc;
 int ManualTime = 15; // how many minutes the manual state lasts
@@ -65,70 +63,72 @@ extern ESP8266WebServer server;
 //#define DEBUG
 #define IP_STATIC
 #ifdef IP_STATIC
-IPAddress IPadr(10,110,3,10); //static IP
-IPAddress netmasfc(255,255,0,0);
-IPAddress gateway(10,110,0,1);
+IPAddress IPadr(10, 110, 3, 10); //static IP
+IPAddress netmasfc(255, 255, 0, 0);
+IPAddress gateway(10, 110, 0, 1);
 #endif
 #define SDA D2
 #define SCL D1
 bool disp = true;
 LiquidCrystal_PCF8574 lcd(0x27);
-String strTemp(float t){
+String strTemp(float t) {
 	String s = "";
-	if (t < 10 ){
-		s="  ";
-		s+=int (t);
+	if (t < 10) {
+		s = "  ";
+		s += int(t);
 		return s;
 	}
 	if (t < 100) {
-		s= " ";
-		s+= int (t);
+		s = " ";
+		s += int(t);
 		return s;
 	}
 	s = int(t);
 	return s;
-};
-void Alarm(void){
+}
+;
+void Alarm(void) {
 
 }
 //The setup function is called once at startup of the sketch
-void setup()
-{
+void setup() {
 // Add your initialization code here
 #ifdef DEBUG
 Serial.begin(115200);
 #endif
 
-WiFi.mode(WIFI_AP_STA);
+	WiFi.mode(WIFI_AP_STA);
 #ifdef IP_STATIC
- WiFi.config(IPadr,gateway,netmasfc);
+	WiFi.config(IPadr, gateway, netmasfc);
 #endif
 
-lcd.begin(16, 2);
-lcd.home() ; lcd.clear();
-lcd.setBacklight(255);
-lcd.setCursor(0, 0);
-lcd.print(F("  Fireplace!  "));
-lcd.setCursor(0, 1);
-lcd.print(F("Uruchamianie..."));
+	lcd.begin(16, 2);
+	lcd.home();
+	lcd.clear();
+	lcd.setBacklight(255);
+	lcd.setCursor(0, 0);
+	lcd.print(F("  Fireplace!  "));
+	lcd.setCursor(0, 1);
+	lcd.print(F("Uruchamianie..."));
 
-WiFi.begin(ssid, pass);
-int i=0;
-  while ((WiFi.status() != WL_CONNECTED) && ( i<=15)) {        //  wait for connection with WiFi
-    delay(500);
-    i +=1;
+	WiFi.begin(ssid, pass);
+	int i = 0;
+	while ((WiFi.status() != WL_CONNECTED) && (i <= 15)) { //  wait for connection with WiFi
+		delay(500);
+		i += 1;
 #ifdef DEBUG
     Serial.print(".");
 #endif
-  }
+	}
 
- if (WiFi.status() != WL_CONNECTED){
-  if (WiFi.getMode() != WIFI_AP_STA){WiFi.mode(WIFI_AP_STA);}  //set mode AP+STATION
- }
- else {
+	if (WiFi.status() != WL_CONNECTED) {
+		if (WiFi.getMode() != WIFI_AP_STA) {
+			WiFi.mode(WIFI_AP_STA);
+		}  //set mode AP+STATION
+	} else {
 
-   M15 = fminutes(ManualTime);   // current time + 15 minutes
- }
+		M15 = fminutes(ManualTime);   // current time + 15 minutes
+	}
 
 #ifdef DEBUG
   if (WiFi.status() == WL_CONNECTED){
@@ -140,80 +140,76 @@ int i=0;
  // printconfig();
 #endif
 
-  setservers(); //start servers www
-  fc.begin(); //initiation fireplace controller
-  fc.readTemp(); // read temperature at fireplace
+	setservers(); //start servers www
+	fc.begin(); //initiation fireplace controller
+	fc.readTemp(); // read temperature at fireplace
 
-};
+}
+;
 
 // The loop function is called in an endless loop
-void loop()
-{
+void loop() {
 
-	if (timec <= millis())  {
-	 timec = millis()+timed;
+	if (timec <= millis()) {
+		timec = millis() + timed;
 		String s1 = "T=";
-		s1+=( strTemp(fc.temp_current));
+		s1 += (strTemp(fc.temp_current));
 //		s1+=( strTemp(fc.temp_in_box));
-		s1+="C";
-		s1+=((fc.relay1.read()) ? " R1+":" R1-");
-		s1+=((fc.relay2.read()) ? "R2+":"R2-");
-		s1+=((fc.relay3.read()) ? "R3+":"R3-");
+		s1 += "C";
+		s1 += ((fc.relay1.read()) ? " R1+" : " R1-");
+		s1 += ((fc.relay2.read()) ? "R2+" : "R2-");
+		s1 += ((fc.relay3.read()) ? "R3+" : "R3-");
 		String s2 = "F1=";
-		s2+=fc.fan1;
-		s2+="%  ";
-		String s3="F2=";
-		s3+=fc.fan2;
-		s3+="%  ";
-	 lcd.home() ; lcd.clear();
-	 lcd.setBacklight(255);
-	 lcd.setCursor(0, 0);
-	 lcd.print(s1);
-	 lcd.setCursor(0, 1);
-	// if (fc.temp_in_box>=fc.temp_alarm){
-	 if (fc.temp_in_box>=fc.temp_alarm){
-		// lcd.setBacklight(120);
-		 lcd.setCursor(0, 1);
-		 lcd.print(F("**** ALARM! ****"));
-//		 if (disp) {
-			 lcd.noDisplay();
-			 delay(300);
-//		 }else{
-			 lcd.display();
-//		 }
-		// disp =!disp;
-
-	 }else{
-	 lcd.setCursor(0, 1);
-	 lcd.print(s2);
-	 lcd.setCursor(7, 1);
-	 lcd.print(s3);
-	 }
-	 lcd.setCursor(14, 1);
-	 if (fc.program==1){
-	 lcd.print("P1");
-	 }else{
-	 lcd.print("P0");
-	 }
-//	 disp =!disp;
-	}
-	 server.handleClient(); //wait for the connection with the client
-
-	 if (!fc.bmode) {	// if mode MANUAL
-		if(timeM <= millis()){ fc.setAuto();} // check the duration of MANUAL when it switches to AUTO
-	 }
-	 fc.working(); // start automation fireplace
-
-	 if (WiFi.status() != WL_CONNECTED){
-
-		if(WiFi.getMode()!= WIFI_AP_STA){
-		  WiFi.mode(WIFI_AP_STA);  //set mode AP+STATION
-		  M15 = fminutes(ManualTime); // current time + 15 minutes
+		s2 += fc.fan1;
+		s2 += "%  ";
+		String s3 = "F2=";
+		s3 += fc.fan2;
+		s3 += "%  ";
+		lcd.home();
+		lcd.clear();
+		lcd.setBacklight(255);
+		lcd.setCursor(0, 0);
+		lcd.print(s1);
+		lcd.setCursor(0, 1);
+		if (fc.temp_in_box >= fc.temp_alarm) {
+			// lcd.setBacklight(120);
+			lcd.setCursor(0, 1);
+			lcd.print(F("**** ALARM! ****"));
+			lcd.noDisplay();
+			delay(300);
+			lcd.display();
+		} else {
+			lcd.setCursor(0, 1);
+			lcd.print(s2);
+			lcd.setCursor(7, 1);
+			lcd.print(s3);
 		}
-	 }
-	 else{
-	    if(M15 <= millis()) WiFi.mode(WIFI_STA); // set mode WIFI_STA
-	 }
+		lcd.setCursor(14, 1);
+		if (fc.program == 1) {
+			lcd.print("P1");
+		} else {
+			lcd.print("P0");
+		}
+	}
+	server.handleClient(); //wait for the connection with the client
+
+	if (!fc.bmode) {	// if mode MANUAL
+		if (timeM <= millis()) {
+			fc.setAuto();
+		} // check the duration of MANUAL when it switches to AUTO
+	}
+	fc.working(); // start automation fireplace
+
+	if (WiFi.status() != WL_CONNECTED) {
+
+		if (WiFi.getMode() != WIFI_AP_STA) {
+			WiFi.mode(WIFI_AP_STA);  //set mode AP+STATION
+			M15 = fminutes(ManualTime); // current time + 15 minutes
+		}
+	} else {
+		if (M15 <= millis())
+			WiFi.mode(WIFI_STA); // set mode WIFI_STA
+	}
 
 }
 

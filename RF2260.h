@@ -16,11 +16,11 @@
 // kod zawiera 24bity
 // dla innych typów przełączników RF należy zmienić w/w parametry
 class RF2260 {
-	char* codOn; //kod załączenia
-	char* codOff; //kod wyłączenia
+	char *codOn; //kod załączenia
+	char *codOff; //kod wyłączenia
 	unsigned int lH; // czas trawania (w us) stanu wysokiego na pinie RF
 	unsigned int RFpin; // pin, do którego podłaczony nadajnik RF
-	unsigned int RF=0; // 1 - załaczony , 0 - wyłączony
+	unsigned int RF = 0; // 1 - załaczony , 0 - wyłączony
 	void send0(void); // wyślij 0
 	void send1(void); // wyslij 1
 	void sendSync(void); // wyslij sygnał synchronizacji

@@ -27,5 +27,4 @@ bool is_authentified(void);
 void handleLogin(void);
 void handleRoot(void);
 
-
 #endif /* WEBPAGES_H_ */
