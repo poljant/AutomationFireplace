@@ -47,7 +47,7 @@
 #include "WebPages.h"
 #include "secrets.h"
 
-String version = "1.2.5";
+String version = "1.2.6
 FireplaceController fc;
 int ManualTime = 15; // how many minutes the manual state lasts
 double long timeM = 0; //time to start MANUAL mode
