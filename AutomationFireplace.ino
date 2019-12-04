@@ -49,7 +49,7 @@
 
 
 //#define DATA_COMPIL __TIMESTAMP__
-String version = "1.2.3";
+String version = "1.2.4";
 FireplaceController fc;
 int ManualTime = 15; // how many minutes the manual state lasts
 double long timeM = 0; //time to start MANUAL mode
