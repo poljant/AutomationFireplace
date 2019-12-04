@@ -28,6 +28,7 @@
 
 class FireplaceController {
 public:
+	float temp_current = 20.0 ; //reading current temperature
 	float temp_in_box = 20.0; //temperature of the air in the fireplace
 	float temp_on1 = 33.0; //level 1 of the fan activation
 	float temp_on2 = 53.0; //level 2 of the fan activation

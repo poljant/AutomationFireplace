@@ -154,9 +154,9 @@ void FireplaceController::readTemp(void){
 
 	 sensors.requestTemperatures();  // start reading the temperature sensors
 	 delay(1000);
-	 float temp = sensors.getTempCByIndex(0);//read the temperature at ºC
-	 if (temp==-127 or temp == 85) return; // if reading error
-	 temp_in_box = temp;
+	 temp_current = sensors.getTempCByIndex(0);//read the temperature at ºC
+	 if (temp_current ==-127 or temp_current == 85) return; // if reading error
+	 temp_in_box = temp_current;
 	 //	 temp_in_box = 55;
 	 if (temp_in_box>temp_max) temp_max=temp_in_box;
 }

@@ -49,7 +49,7 @@
 
 
 //#define DATA_COMPIL __TIMESTAMP__
-String version = "1.2.4";
+String version = "1.2.5";
 FireplaceController fc;
 int ManualTime = 15; // how many minutes the manual state lasts
 double long timeM = 0; //time to start MANUAL mode
@@ -153,7 +153,8 @@ void loop()
 	if (timec <= millis())  {
 	 timec = millis()+timed;
 		String s1 = "T=";
-		s1+=( strTemp(fc.temp_in_box));
+		s1+=( strTemp(fc.temp_current));
+//		s1+=( strTemp(fc.temp_in_box));
 		s1+="C";
 		s1+=((fc.relay1.read()) ? " R1+":" R1-");
 		s1+=((fc.relay2.read()) ? "R2+":"R2-");
