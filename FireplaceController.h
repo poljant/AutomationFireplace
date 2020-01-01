@@ -7,9 +7,9 @@
 
 #ifndef FIREPLACECONTROLLER_H_
 #define FIREPLACECONTROLLER_H_
-#include "PWM.h"
 #include <Relay.h>
-#include "RF2260.h"
+#include "../AutomationFireplace/PWM.h"
+#include "../AutomationFireplace/RF2260.h"
 /* Układ załącza wentylatory obiegu ciepła z kominka
  * Załączenia są zależne od teperatury powietrza w komorze kominka
  * Ustawiane są 3 progi temperatury temp_on1, temp_on2 i temp_on3

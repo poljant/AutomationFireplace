@@ -12,14 +12,15 @@
  *      Author: Jan Trzciński  <poljant@post.pl>
  */
 //#include <ESP8266HTTPClient.h>
-#include "WebPages.h"
+#include "../AutomationFireplace/WebPages.h"
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPUpdateServer.h>
 #include <EEPROM.h>
-#include "FireplaceController.h"
-#include "RF2260.h"
+
+#include "../AutomationFireplace/FireplaceController.h"
+#include "../AutomationFireplace/RF2260.h"
 
 //#define POLISH
 extern String version;
@@ -84,7 +85,7 @@ String HTMLFooter() {             //  stopka strony www
 			F(
 					"<p><a href = \"/\"><button class=\"btn btn-info\">Reload</button></a></p>");
 #endif
-	f += F("<p>Jan Trzciński &copy; 2016-2018</p></td></tr>"
+	f += F("<p>Jan Trzciński &copy; 2016-2020</p></td></tr>"
 			"</body>\n"
 			"</html>\n");
 	return f;

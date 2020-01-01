@@ -10,7 +10,7 @@
  *      Częstotliwość nadawania to 433MHz  lub 896MHz.
  *      Do uruchomienia układu potrzebny jest nadajnik RF na 433MHz lub 866MHz
  */
-#include "RF2260.h"
+#include "../AutomationFireplace/RF2260.h"
 
 #include <Arduino.h>
 

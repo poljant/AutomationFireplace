@@ -6,13 +6,14 @@
  *      Author: Jan Trzciński  <poljant@post.pl>
  */
 
+#include "../AutomationFireplace/FireplaceController.h"
+
 #include <Arduino.h>
 #include <DallasTemperature.h>
 #include <OneWire.h>
 #include <Relay.h>
-#include "FireplaceController.h"
-#include "PWM.h"
-#include "RF2260.h"
+#include "../AutomationFireplace/PWM.h"
+#include "../AutomationFireplace/RF2260.h"
 
 const char *codOn1 = ("000101010001010111000011"); //attachment code
 const char *codOff1 = ("000101010001010111001100"); //disabling code
@@ -146,7 +147,7 @@ void FireplaceController::working(void) {
 void FireplaceController::readTemp(void) {
 
 	sensors.requestTemperatures();  // start reading the temperature sensors
-	delay(1000);
+	delay(850);
 	temp_current = sensors.getTempCByIndex(0);  //read the temperature at ºC
 	if (temp_current == -127 or temp_current == 85)
 		return; // if reading error

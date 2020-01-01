@@ -8,13 +8,13 @@
 #ifndef WEBPAGES_H_
 #define WEBPAGES_H_
 
-#include "WebPages.h"
+#include "../AutomationFireplace/WebPages.h"
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPUpdateServer.h>
 
-#include "FireplaceController.h"
+#include "../AutomationFireplace/FireplaceController.h"
 //#include "FSBrowser.h"
 String HTMLHeader();
 String HTMLFooter();

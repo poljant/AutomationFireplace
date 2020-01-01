@@ -5,7 +5,7 @@
  *      Author: jant
  */
 
-#include "PWM.h"
+#include "../AutomationFireplace/PWM.h"
 
 #include <Arduino.h>
 

@@ -41,13 +41,12 @@
 #include <Wire.h>
 #include <Relay.h>
 
-#include "FireplaceController.h"
-
-#include "RF2260.h"
-#include "WebPages.h"
 #include "secrets.h"
+#include "../AutomationFireplace/RF2260.h"
+#include "../AutomationFireplace/FireplaceController.h"
+#include "../AutomationFireplace/WebPages.h"
 
-String version = "1.2.6";
+String version = "1.2.7";
 FireplaceController fc;
 int ManualTime = 15; // how many minutes the manual state lasts
 double long timeM = 0; //time to start MANUAL mode
@@ -55,6 +54,7 @@ double long M15; // time start mode WIFI_AP_STA + 15minutes
 extern double long fminutes(int);
 double long timed = 500; //time to delay display
 double long timec = 0; //time current to display
+bool _display = true; //display On or Off
 extern ESP8266WebServer server;
 // set the details of your WiFi network
 //const char* ssid = "SSID"; //SSID your WiFi
@@ -175,10 +175,14 @@ void loop() {
 			// lcd.setBacklight(120);
 			lcd.setCursor(0, 1);
 			lcd.print(F("**** ALARM! ****"));
-			lcd.noDisplay();
+			_display ? lcd.noDisplay() : lcd.display();
+			_display = !_display;
+/*			lcd.noDisplay();
 			delay(300);
-			lcd.display();
+			lcd.display();*/
 		} else {
+			_display=true;
+			lcd.display();
 			lcd.setCursor(0, 1);
 			lcd.print(s2);
 			lcd.setCursor(7, 1);
