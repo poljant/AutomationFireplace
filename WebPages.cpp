@@ -136,7 +136,7 @@ String HTMLPage1() {      // pierwsza część strony www
 }
 String HTMLPage1a() {
 	String t = "";
-	fc.readTemp();
+	//fc.readTemp();
 	float temperature = fc.readTempIn();      // (sensors.getTempCByIndex(0));
 	// float powersuply = ESP.getVcc()*0.913; //popraw błąd przeliczania napięcia
 #ifdef POLISH

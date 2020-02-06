@@ -46,7 +46,7 @@
 #include "../AutomationFireplace/FireplaceController.h"
 #include "../AutomationFireplace/WebPages.h"
 
-String version = "1.2.7";
+String version = "1.2.9";
 FireplaceController fc;
 int ManualTime = 15; // how many minutes the manual state lasts
 double long timeM = 0; //time to start MANUAL mode
@@ -142,7 +142,8 @@ Serial.begin(115200);
 
 	setservers(); //start servers www
 	fc.begin(); //initiation fireplace controller
-	fc.readTemp(); // read temperature at fireplace
+	fc.readTemp(false); // read temperature at fireplace
+	fc.bread = true;
 
 }
 ;

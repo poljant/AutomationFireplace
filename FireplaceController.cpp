@@ -57,6 +57,7 @@ FireplaceController::FireplaceController() {
 	rf1.setRF(RFpin, lH, codOn1, codOff1);
 	rf2.setRF(RFpin, lH, codOn2, codOff2);
 	rf3.setRF(RFpin, lH, codOn3, codOff3);
+	timecurrent = 0;
 
 }
 
@@ -77,8 +78,20 @@ void FireplaceController::begin(void) {
 void FireplaceController::working(void) {
 	int p = 0;
 
+	if (millis()>timecurrent){
+		if (!bread){
+		timecurrent= millis()+850;
+		readTemp(false);
+		bread = true;}
+		else {
+			timecurrent= millis()+timedelay;
+			readTemp(true);
+			bread = false;
+			}
+		//readTemp(bread);
+	}
 	if (bmode) {
-		readTemp();
+		//readTemp();
 
 		if (temp_in_box > temp_on1)
 			p = 0;
@@ -144,16 +157,20 @@ void FireplaceController::working(void) {
 
 }
 //}
-void FireplaceController::readTemp(void) {
+void FireplaceController::readTemp(bool bread) {
 
+	if (!bread) {
 	sensors.requestTemperatures();  // start reading the temperature sensors
-	delay(850);
+	//delay(850);
+	}
+	else {
 	temp_current = sensors.getTempCByIndex(0);  //read the temperature at ºC
 	if (temp_current == -127 or temp_current == 85)
 		return; // if reading error
 	temp_in_box = temp_current;
 	if (temp_in_box > temp_max)
 		temp_max = temp_in_box;
+	}
 }
 
 float FireplaceController::readTempIn(void) {

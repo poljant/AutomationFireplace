@@ -47,7 +47,10 @@ public:
 	int fanx = 0;
 	bool bmode = true; // true mode AUTO, false mode MANUAL
 	bool alarm = true; // alarm
+	bool bread = false;
 	int program = 1;
+	int timecurrent = 0;
+	int timedelay = 30000; //read temperature 30 sek
 
 	RF2260 rf1;   // RF1 switch
 	RF2260 rf2;   // RF2 switch
@@ -64,7 +67,7 @@ public:
 	void setManual(void);
 	void begin(void);
 	void setTemp(float);
-	void readTemp(void);
+	void readTemp(bool);
 	float readTempIn(void);
 	void working(void);
 	bool readMode(void);
