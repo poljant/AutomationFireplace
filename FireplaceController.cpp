@@ -78,15 +78,15 @@ void FireplaceController::begin(void) {
 void FireplaceController::working(void) {
 	int p = 0;
 
-	if (millis()>timecurrent){
-		if (!bread){
+	if (millis()>=timecurrent){
+		if (!breadTemp){
 		timecurrent= millis()+850;
 		readTemp(false);
-		bread = true;}
+		breadTemp = true;}
 		else {
 			timecurrent= millis()+timedelay;
 			readTemp(true);
-			bread = false;
+			breadTemp = false;
 			}
 		//readTemp(bread);
 	}
@@ -157,16 +157,16 @@ void FireplaceController::working(void) {
 
 }
 //}
-void FireplaceController::readTemp(bool bread) {
-
-	if (!bread) {
+void FireplaceController::readTemp(bool breadx) {
+	if (!breadx) {
 	sensors.requestTemperatures();  // start reading the temperature sensors
 	//delay(850);
 	}
 	else {
 	temp_current = sensors.getTempCByIndex(0);  //read the temperature at ºC
-	if (temp_current == -127 or temp_current == 85)
-		return; // if reading error
+	if (temp_current == -127 or temp_current == 85){
+		timecurrent= millis()+1000;
+		return; }// if reading error
 	temp_in_box = temp_current;
 	if (temp_in_box > temp_max)
 		temp_max = temp_in_box;

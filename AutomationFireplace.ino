@@ -142,8 +142,8 @@ Serial.begin(115200);
 
 	setservers(); //start servers www
 	fc.begin(); //initiation fireplace controller
-	fc.readTemp(false); // read temperature at fireplace
-	fc.bread = true;
+	fc.readTemp(false); // start read temperature at fireplace
+	fc.breadTemp = true;
 
 }
 ;

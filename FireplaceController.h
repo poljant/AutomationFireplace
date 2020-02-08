@@ -47,9 +47,9 @@ public:
 	int fanx = 0;
 	bool bmode = true; // true mode AUTO, false mode MANUAL
 	bool alarm = true; // alarm
-	bool bread = false;
+	bool breadTemp = false;
 	int program = 1;
-	int timecurrent = 0;
+	unsigned long  timecurrent = 0;
 	int timedelay = 30000; //read temperature 30 sek
 
 	RF2260 rf1;   // RF1 switch
