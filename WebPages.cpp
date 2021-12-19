@@ -439,7 +439,12 @@ void setservers(void) {
 				server.send(200, "text/html",
 						((fc.alarm) ? "Alarm On" : "Alarm Off"));
 			});
-
+	server.on("/temperature", []()      // alarm off / on
+			{
+		String	t ;
+//		t = printf("{\"temperature\":\"%3.1d\"", fc.readTempIn());
+				server.send(200, "text/html", String(fc.readTempIn()));
+			});
 	server.on("/reboot", []()      // reset system
 			{
 				if (fc.bmode)
