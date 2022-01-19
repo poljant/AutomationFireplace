@@ -94,37 +94,38 @@ void FireplaceController::working(void) {
 		//readTemp();
 		if (temp_alarm <= temp_in_box) {
 //			p = 3;
-			storey = 4;
+//			storey = 4;
 			alarm = true;
-			relay3.setOn();
+			relay2.setOn();
 		} else {
+//			if (storey==4) 	storey = 3;
 			alarm = false;
-			relay3.setOff();
+			relay2.setOff();
 		}
 /*		if (alarm) {
 			relay2.setOn();
 		} else {
 			relay2.setOff();
 		}*/
-//jeśli temperatura rośnie od minimalney (gdy rozpalono w kominku)
-		if ((temp_in_box >= temp_on1) and !start_automation){
+//jeśli temperatura rośnie od minimalnej (gdy rozpalono w kominku)
+		if ((temp_in_box > temp_off) and !start_automation){
 			start_automation = true; //ustaw start procesu grzania
-		    temp_off1 = temp_on1 - hyster;
+		    temp_off = temp_on1 - hyster;
 //			p = 0;
 			storey = 1;	//ustw poziom 1
-			relay1.setOn();
+//			relay1.setOn();
 			relay3.setOn();
 			if (rf1.readRF() == 0) { // send RF switching signal when rf1 is turned off
 				rf1.sendOn();
 			};
 //jeśli cykl grzania już trwa i jest poziom 1
 // gdy temperatura spada poniżej poziomu 1
- 		} else if ((temp_in_box <= temp_off1) and start_automation and storey == 1) {
+ 		} else if ((temp_in_box <= temp_off) and start_automation and storey == 1) {
 			start_automation = false;
-			temp_off1 = temp_on1+hyster;
+			temp_off = temp_on1 + hyster;
 //			p = 0;
 			storey = 0;
-			relay1.setOff();
+//			relay1.setOff();
 			relay3.setOff();
 			if (rf1.readRF() == 1) { // send an RF off signal when rf1 is on
 				rf1.sendOff();
@@ -153,7 +154,7 @@ void FireplaceController::working(void) {
 		if ((temp_in_box >= temp_on2) and storey == 1) {
 //			p = 2;
 			storey = 2;
-			relay2.setOn();
+			relay1.setOn();
 			if (rf2.readRF() == 0) { // send RF switching signal when rf2 is turned off
 				rf2.sendOn();
 			};
@@ -161,7 +162,7 @@ void FireplaceController::working(void) {
 		} else if ((temp_in_box <= temp_off2) and storey == 2 ) {
 //			p = 1;
 			storey = 1;
-			relay2.setOff();
+			relay1.setOff();
 			if (rf2.readRF() == 1) { // send RF switching signal when rf2 is turned on
 				rf2.sendOff();
 			};
@@ -185,9 +186,9 @@ void FireplaceController::working(void) {
 //		if (storey > 3) storey = 3;
 //		if (p >= 0) {
 //ustaw obroty wentylatorów zależnie od poziomy
-		if (storey>0) {
+//		if (storey>0) {
 			setFans(storey);
-		}
+//		}
 	} //end bmode
 
 }
@@ -226,23 +227,43 @@ int FireplaceController::temp2duration(long int v) {
 		return 0;
 	if (v > temp_on2)
 		v = temp_on2;
-	return (int) map(v, temp_on1, (temp_on2), 600, 1023);//450 na 600
+	return (int) map(v, temp_on1, (temp_on2), 450, 1023);//450 na 600
 }
 void FireplaceController::setFans(int i) {
-	if (program == 1) {
-		fanx = temp2duration(temp_in_box);
-		if (fanx < 0)
-			fanx = 0;
-		fan1 = duration2percent(fanx);
-		fan2 = duration2percent(fanx);
+	if (start_automation and (temp_off<=temp_in_box)) {
+		if (program == 1) {
+			fanx = temp2duration(temp_in_box);
+
+			if (fanx < 0)
+				fanx = 0;
+			if (i > 0) {
+//			fanx = temp2duration(temp_in_box);
+				fan1 = duration2percent(fanx);
+				fan2 = duration2percent(fanx);
+			} else {
+				fan1 = 0;
+				fan2 = 0;
+			}
+		} else {
+			if (i > 3)
+				i = 3;
+			if (i < 0)
+				i = 0;
+			fan1 = Fan1Speed[i];
+			fan2 = Fan2Speed[i];
+		}
+		if (fan1 > 0) {
+			pwm.write(0, percent2duration(fan1));
+		} else {
+			pwm.write(0, 0);
+		}
+		if (fan2 > 0) {
+			pwm.write(1, percent2duration(fan2));
+		} else {
+			pwm.write(1, 0);
+		}
 	} else {
-		if (i > 3)
-			i = 3;
-		if (i < 0)
-			i = 0;
-		fan1 = Fan1Speed[i];
-		fan2 = Fan2Speed[i];
+		pwm.write(0, 0);
+		pwm.write(1, 0);
 	}
-	pwm.write(0, percent2duration(fan1));
-	pwm.write(1, percent2duration(fan2));
 }

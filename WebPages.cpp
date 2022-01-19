@@ -82,10 +82,9 @@ String HTMLFooter() {             //  stopka strony www
   f += F("<p><a href = \"/\"><button class=\"btn btn-info\">Odświerz stronę</button></a></p>");
 #else
 	f +=
-			F(
-					"<p><a href = \"/\"><button class=\"btn btn-info\">Reload</button></a></p>");
+			F("<p><a href = \"/\"><button class=\"btn btn-info\">Reload</button></a></p>");
 #endif
-	f += F("<p>Jan Trzciński &copy; 2016-2020</p></td></tr>"
+	f += F("<p>Jan Trzciński &copy; 2016-2022</p></td></tr>"
 			"</body>\n"
 			"</html>\n");
 	return f;
