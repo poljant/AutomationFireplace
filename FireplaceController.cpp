@@ -108,9 +108,10 @@ void FireplaceController::working(void) {
 			relay2.setOff();
 		}*/
 //jeśli temperatura rośnie od minimalnej (gdy rozpalono w kominku)
-		if ((temp_in_box > temp_off) and !start_automation){
+//		if ((temp_in_box > temp_off) and !start_automation){
+		if ((temp_in_box > temp_on1) and !start_automation){
 			start_automation = true; //ustaw start procesu grzania
-		    temp_off = temp_on1 - hyster;
+//		    temp_off = temp_on1 - hyster;
 //			p = 0;
 			storey = 1;	//ustw poziom 1
 //			relay1.setOn();
@@ -120,9 +121,10 @@ void FireplaceController::working(void) {
 			};
 //jeśli cykl grzania już trwa i jest poziom 1
 // gdy temperatura spada poniżej poziomu 1
- 		} else if ((temp_in_box <= temp_off) and start_automation and storey == 1) {
+ 		}
+		if ((temp_in_box <= temp_off) and start_automation and storey == 1) {
 			start_automation = false;
-			temp_off = temp_on1 + hyster;
+//			temp_off = temp_on1 + hyster;
 //			p = 0;
 			storey = 0;
 //			relay1.setOff();

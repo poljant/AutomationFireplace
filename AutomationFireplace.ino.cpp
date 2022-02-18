@@ -46,7 +46,7 @@
 #include "../AutomationFireplace/FireplaceController.h"
 #include "../AutomationFireplace/WebPages.h"
 
-String version = "1.6.12";
+String version = "1.6.15";
 FireplaceController fc;
 int ManualTime = 15; // how many minutes the manual state lasts
 double long timeM = 0; //time to start MANUAL mode

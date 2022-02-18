@@ -31,13 +31,13 @@ class FireplaceController {
 public:
 	float temp_current = 20.0; //reading current temperature
 	float temp_in_box = temp_current; //temperature of the air in the fireplace
-	float temp_on1 = 35.0; //level 1 of the fan activation
+	float temp_on1 = 40.0; //level 1 of the fan activation 35
 	float temp_on2 = 60.0; //level 2 of the fan activation
 	float temp_on3 = 80.0; // level 3 of the fan activation
 	float temp_alarm = 100; // start alarm
-	float hyster = 5; // hysteresis
-	float temp_off = temp_on1;
-	float temp_off1 = temp_on1 - hyster; //level 1 switch off the fan
+	float hyster = 10; // hysteresis
+	float temp_off = 30;
+	float temp_off1 = temp_off;  //temp_on1 - hyster; //level 1 switch off the fan
 	float temp_off2 = temp_on2 - hyster; //level 2 switch off the fan
 	float temp_off3 = temp_on3 - hyster; //level 3 switch off the fan
 	float temp_max = temp_current; //remember the last maximum temperature
