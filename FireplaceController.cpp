@@ -58,6 +58,7 @@ FireplaceController::FireplaceController() {
 	rf2.setRF(RFpin, lH, codOn2, codOff2);
 	rf3.setRF(RFpin, lH, codOn3, codOff3);
 	timecurrent = 0;
+	storey = 0;
 
 }
 
@@ -78,119 +79,85 @@ void FireplaceController::begin(void) {
 void FireplaceController::working(void) {
 //	int p = 0;
 
-	if (millis()>=timecurrent){
-		if (!breadTemp){
-		timecurrent= millis()+850;
-		readTemp(false);
-		breadTemp = true;}
-		else {
-			timecurrent= millis()+timedelay;
+	if (millis() >= timecurrent) {
+		if (!breadTemp) {
+			timecurrent = millis() + 850;
+			readTemp(false);
+			breadTemp = true;
+		} else {
+			timecurrent = millis() + timedelay;
 			readTemp(true);
 			breadTemp = false;
-			}
+		}
 		//readTemp(bread);
 	}
 	if (bmode) {
 		//readTemp();
 		if (temp_alarm <= temp_in_box) {
-//			p = 3;
-//			storey = 4;
 			alarm = true;
 			relay2.setOn();
 		} else {
-//			if (storey==4) 	storey = 3;
 			alarm = false;
 			relay2.setOff();
 		}
-/*		if (alarm) {
-			relay2.setOn();
-		} else {
-			relay2.setOff();
-		}*/
+
 //jeśli temperatura rośnie od minimalnej (gdy rozpalono w kominku)
-//		if ((temp_in_box > temp_off) and !start_automation){
-		if ((temp_in_box > temp_on1) and !start_automation){
+		if ((temp_in_box >= temp_on1) and !start_automation and storey == 0) {
 			start_automation = true; //ustaw start procesu grzania
-//		    temp_off = temp_on1 - hyster;
-//			p = 0;
 			storey = 1;	//ustw poziom 1
 //			relay1.setOn();
 			relay3.setOn();
 			if (rf1.readRF() == 0) { // send RF switching signal when rf1 is turned off
 				rf1.sendOn();
 			};
+		}
+		if (start_automation) {
 //jeśli cykl grzania już trwa i jest poziom 1
 // gdy temperatura spada poniżej poziomu 1
- 		}
-		if ((temp_in_box <= temp_off) and start_automation and storey == 1) {
-			start_automation = false;
-//			temp_off = temp_on1 + hyster;
-//			p = 0;
-			storey = 0;
+			if ((temp_in_box <= temp_off1) and storey == 1) {
+				start_automation = false;
+				storey = 0;
+//				setFans(storey);
 //			relay1.setOff();
-			relay3.setOff();
-			if (rf1.readRF() == 1) { // send an RF off signal when rf1 is on
-				rf1.sendOff();
+				relay3.setOff();
+				if (rf1.readRF() == 1) { // send an RF off signal when rf1 is on
+					rf1.sendOff();
+				}
 			}
-		}
 
-/*		if ((temp_in_box >= temp_on1) & storey==1) {
-			p = 1;
-			storey = 1;
-			relay3.setOn();
-			if (rf1.readRF() == 0) { // send RF switching signal when rf1 is turned off
-				rf1.sendOn();
-			};
-
-		} else if ((temp_in_box <= temp_off1) & start_automation & storey == 1) {
-			start_automation = false;
-			temp_off1 = temp_on1;
-			p = 0;
-			storey = 0;
-			relay3.setOff();
-			if (rf1.readRF() == 1) { // send an RF off signal when rf1 is on
-				rf1.sendOff();
-			}
-		}*/
 // gdy temperatura przekroczyła poziom 2
-		if ((temp_in_box >= temp_on2) and storey == 1) {
-//			p = 2;
-			storey = 2;
-			relay1.setOn();
-			if (rf2.readRF() == 0) { // send RF switching signal when rf2 is turned off
-				rf2.sendOn();
-			};
+			if ((temp_in_box >= temp_on2) and storey == 1) {
+				storey = 2;
+				relay1.setOn();
+				if (rf2.readRF() == 0) { // send RF switching signal when rf2 is turned off
+					rf2.sendOn();
+				};
 // gdy temperatura spada i jest poziom 2
-		} else if ((temp_in_box <= temp_off2) and storey == 2 ) {
-//			p = 1;
-			storey = 1;
-			relay1.setOff();
-			if (rf2.readRF() == 1) { // send RF switching signal when rf2 is turned on
-				rf2.sendOff();
-			};
-
-		}
+			}
+			if ((temp_in_box <= temp_off2) and storey == 2) {
+				storey = 1;
+				relay1.setOff();
+				if (rf2.readRF() == 1) { // send RF switching signal when rf2 is turned on
+					rf2.sendOff();
+				};
+			}
 //gdy temperatura przekroczyła poziom 3
-		if ((temp_in_box >= temp_on3) and storey == 2) {
-//			p = 3;
-			storey = 3;
-			if (rf3.readRF() == 0) { // send RF switching signal when rf3 is turned off
-				rf3.sendOn();
-			};
+			if ((temp_in_box >= temp_on3) and storey == 2) {
+				storey = 3;
+				if (rf3.readRF() == 0) { // send RF switching signal when rf3 is turned off
+					rf3.sendOn();
+				};
 // gdy temperatura spada i jest poziom 3
-		} else if ((temp_in_box <= temp_off3) and storey == 3) {
-//			p = 2;
-			storey = 2;
-			if (rf3.readRF() == 1) { // send an RF off signal when rf3 is on
-				rf3.sendOff();
-			};
-		}
-//		if (storey > 3) storey = 3;
-//		if (p >= 0) {
+			} //else
+			if ((temp_in_box <= temp_off3) and storey == 3) {
+				storey = 2;
+				if (rf3.readRF() == 1) { // send an RF off signal when rf3 is on
+					rf3.sendOff();
+				};
+			}
 //ustaw obroty wentylatorów zależnie od poziomy
-//		if (storey>0) {
 			setFans(storey);
-//		}
+		} //end star_automation
 	} //end bmode
 
 }
@@ -225,14 +192,14 @@ int FireplaceController::duration2percent(long int v) {
 }
 
 int FireplaceController::temp2duration(long int v) {
-	if (v < temp_on1)
+	if (v < temp_off)
 		return 0;
 	if (v > temp_on2)
 		v = temp_on2;
 	return (int) map(v, temp_on1, (temp_on2), 450, 1023);//450 na 600
 }
 void FireplaceController::setFans(int i) {
-	if (start_automation and (temp_off<=temp_in_box)) {
+	if (start_automation and (temp_off<=temp_in_box) and i > 0) {
 		if (program == 1) {
 			fanx = temp2duration(temp_in_box);
 
@@ -243,26 +210,26 @@ void FireplaceController::setFans(int i) {
 				fan1 = duration2percent(fanx);
 				fan2 = duration2percent(fanx);
 			} else {
-				fan1 = 0;
-				fan2 = 0;
+//				fan1 = 0;
+//				fan2 = 0;
 			}
 		} else {
 			if (i > 3)
 				i = 3;
-			if (i < 0)
-				i = 0;
+			if (i < 1)
+				i = 1;
 			fan1 = Fan1Speed[i];
 			fan2 = Fan2Speed[i];
 		}
 		if (fan1 > 0) {
 			pwm.write(0, percent2duration(fan1));
 		} else {
-			pwm.write(0, 0);
+//			pwm.write(0, 0);
 		}
 		if (fan2 > 0) {
 			pwm.write(1, percent2duration(fan2));
 		} else {
-			pwm.write(1, 0);
+//			pwm.write(1, 0);
 		}
 	} else {
 		pwm.write(0, 0);
