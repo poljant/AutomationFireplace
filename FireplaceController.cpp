@@ -196,7 +196,7 @@ int FireplaceController::temp2duration(long int v) {
 		return 0;
 	if (v > temp_on2)
 		v = temp_on2;
-	return (int) map(v, temp_on1, (temp_on2), 450, 1023);//450 na 600
+	return (int) map(v, temp_off, temp_on2, 450, 1023);//450 na 600
 }
 void FireplaceController::setFans(int i) {
 	if (start_automation and (temp_off<=temp_in_box) and i > 0) {
