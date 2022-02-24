@@ -59,6 +59,7 @@ FireplaceController::FireplaceController() {
 	rf3.setRF(RFpin, lH, codOn3, codOff3);
 	timecurrent = 0;
 	storey = 0;
+	start_automation = false;
 
 }
 
@@ -210,8 +211,8 @@ void FireplaceController::setFans(int i) {
 				fan1 = duration2percent(fanx);
 				fan2 = duration2percent(fanx);
 			} else {
-//				fan1 = 0;
-//				fan2 = 0;
+				fan1 = 0;
+				fan2 = 0;
 			}
 		} else {
 			if (i > 3)
@@ -224,15 +225,17 @@ void FireplaceController::setFans(int i) {
 		if (fan1 > 0) {
 			pwm.write(0, percent2duration(fan1));
 		} else {
-//			pwm.write(0, 0);
+			pwm.write(0, 0);
 		}
 		if (fan2 > 0) {
 			pwm.write(1, percent2duration(fan2));
 		} else {
-//			pwm.write(1, 0);
+			pwm.write(1, 0);
 		}
 	} else {
 		pwm.write(0, 0);
 		pwm.write(1, 0);
+		fan1 = 0;
+		fan2 = 0;
 	}
 }
