@@ -46,7 +46,7 @@
 #include "../AutomationFireplace/FireplaceController.h"
 #include "../AutomationFireplace/WebPages.h"
 
-String version = "1.6.26";
+String version = "2.0.1";
 FireplaceController fc;
 int ManualTime = 15; // how many minutes the manual state lasts
 double long timeM = 0; //time to start MANUAL mode
@@ -204,7 +204,7 @@ void loop() {
 			fc.setAuto();
 		} // check the duration of MANUAL when it switches to AUTO
 	}
-	fc.working(); // start automation fireplace
+	fc.loop(); // start automation fireplace
 
 	if (WiFi.status() != WL_CONNECTED) {
 

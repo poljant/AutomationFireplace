@@ -49,6 +49,7 @@ public:
 	int fanx = 0;
 	int storey = 0; // temperature dependent level ( 1, 2, 3, 4 = alarm)
 	bool bmode = true; // true mode AUTO, false mode MANUAL
+	bool externalctrl = false;
 	bool alarm = false; // alarm
 	bool breadTemp = false;
 	bool start_automation = false; // true if star automation (temp_in_box > temp_on1)
@@ -73,7 +74,7 @@ public:
 	void setTemp(float);
 	void readTemp(bool);
 	float readTempIn(void);
-	void working(void);
+	void loop(void);
 	bool readMode(void);
 	int percent2duration(long int);
 	int duration2percent(long int);
